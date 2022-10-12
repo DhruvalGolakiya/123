@@ -5,8 +5,6 @@ const { parse } = require("path");
 const router = express.Router();
 const path = require("path");
 
-
-
 const jsonData = [];
 router.get("/", (req, res) => {
   res.json(jsonData);
@@ -19,11 +17,10 @@ router.delete("/:id", (req, res) => {
     if (id == jsonData[i].id) {
       index = i;
       jsonData.splice(index, 1);
-      // console.log("v". + v);
+
       break;
     }
   }
-
   res.send(jsonData);
 });
 

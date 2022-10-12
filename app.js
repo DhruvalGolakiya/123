@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 var fileRouter = require("./routes/files/file");
+var fileEditRouter = require("./routes/fileedit/file_edit");
 
 var app = express();
 
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/files', fileRouter)
+app.use('/file', fileEditRouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
