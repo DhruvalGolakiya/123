@@ -5,36 +5,8 @@ const { parse } = require("path");
 const router = express.Router();
 const path = require("path");
 
-// router.get("/", (req, res) => {
-//   fs.readFile(path.join(__dirname, "../../test.js"), (err, data) => {
-//     res.send(JSON.parse(data))
-//   });
-// });
 
-// router.post("/", (req, res) => {
-//   let newUser = {
-//     name: req.body.name,
-//     // id: req.body.id,// new date object
-//   };
-//   fs.writeFile(
-//     path.join(__dirname, "../../test2.json"),
-//     JSON.stringify(newUser),
-//     (err) => {
-//       res.send("ok");
-//     }
-//   );
-// });
 
-// router.get("/", (req, res) => {
-//     res.json(userData)
-// });
-// fs.writeFile(
-//       path.join(__dirname, "../../test2.json"),
-//    JSON.stringify(newUser),
-//     (err) => {
-//       res.send("ok");
-//         }
-//     );
 const jsonData = [];
 router.get("/", (req, res) => {
   res.json(jsonData);
