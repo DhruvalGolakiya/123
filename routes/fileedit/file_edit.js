@@ -43,14 +43,14 @@ const path = require("path");
 //   res.send(jsonData);
 // });
 
-router.get("/", (res, req) => {
+router.get("/", (req, res) => {
   fs.readFile(path.join(__dirname, "./name.json"), "utf8", (err, data) => {
     if (err) {
       throw err;
       return;
     }
     console.log(data);
-    req.send(data);
+    res.send(data);
   });
 });
 
@@ -58,40 +58,103 @@ var obj = {
   users: [],
 };
 
-router.post("/", (res, req) => {
+router.post("/", (req, res) => {
   fs.readFile(path.join(__dirname, "./name.json"), "utf8", (err, data) => {
     if (err) {
       console.log(err);
     } else {
-      obj = JSON.parse(data); //now it an object
-      obj.users.push({ id: new Date().getTime(), name: res.body.name }); 
-      req.json(obj)
-      const Json = JSON.stringify(obj, null, 2); //convert it back to json
+      obj = JSON.parse(data);
+      obj.users.push({ id: new Date().getTime(), name: req.body.name });
+      res.json(obj);
+      const Json = JSON.stringify(obj, null, 2);
       fs.writeFile(path.join(__dirname, "./name.json"), Json, "utf8", (err) => {
         if (err) {
           console.log(err);
         }
-      }); // 
-
-    
+      }); //
     }
   });
 });
 
-// console.log(data);
-// res.json(jsonData)
+// var obj = {
+//   users: [],
+// };
+router.delete("/:id", (req, res) => {
+  let id = req.params.id;
+  let index;
+  fs.readFile(path.join(__dirname, "./name.json"), "utf8", (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      obj = JSON.parse(data);
+      console.log("data:", obj);
 
-// var json = JSON.parse(data);s
-// json.push({ id: new Date().getTime(), ...req.body });
-// fs.writeFile(path.join('__dirname' , '../../files/1.json'), JSON.stringify(json));
-// console.log("DATAA",+data);
+      for (let i = 0; i <= obj.users.length - 1; i++) {
+        if (id == obj.users[i].id) {
+          index = i;
+          console.log(obj.users.splice(index, 1));
+        }
 
-//   jsonData.({ id: new Dae().getTime(), ...req.body });
-//   tres.json(jsonData);
+        //  let deletedIndex = obj.users.findIndex((user)=> user.id = id)
+        //  console.log(obj.users.findIndex((user)=> user.id = ids));
+        //  console.log("deletedIndex",deletedIndex);
 
-// router.get("/filter", (req, res) => {
-//   let voters = jsonData.filter((user) => user.age > 18);
-//   res.json(voters);
-// })
+        // obj.users.splice(deletedIndex,1)
+        // res.json(obj);
+      }
+      console.log("INDEX", index);
+      console.log(obj);
+      res.send(obj);
+      console.log("FinalData :::::::::::", obj);
+      let updatedData = JSON.stringify(obj, null, 2);
+      fs.writeFile(
+        path.join(__dirname, "./name.json"),
+        updatedData,
+        "utf8",
+        (err) => {
+          if (err) {
+            console.log(err);
+          }
 
+          console.log(obj);
+        }
+      );
+    }
+  });
+});
+
+router.patch("/:id", (req, res) => {
+  let id = req.params.id;
+  let name = req.body.name;
+  let index;
+  fs.readFile(path.join(__dirname, "./name.json"), "utf8", (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      obj = JSON.parse(data);
+      console.log("data:", obj);
+      // let i = obj.users.findIndex((user) => (user.id = id));
+      for (i = 0; i <= obj.users.length - 1; i++) {
+        if (id == obj.users[i].id) {
+          index = i;
+          obj.users[i].name = name;
+          console.log(obj.users[i].name);
+        }
+      }
+      console.log("INDEX::", index);
+      let updatedData = JSON.stringify(obj, null, 2);
+      fs.writeFile(
+        path.join(__dirname, "./name.json"),
+        updatedData,
+        "utf8",
+        (err) => {
+          if (err) {
+            console.log(err);
+          }
+        }
+      );
+    }
+    res.send(obj)
+  });
+});
 module.exports = router;

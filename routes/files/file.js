@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 
 router.delete("/:id", (req, res) => {
-  let id = req.params.id;
+  let id = req.params.id
   let index;
   for (let i = 0; i <= jsonData.length - 1; i++) {
     if (id == jsonData[i].id) {
