@@ -12,8 +12,8 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.10.0",
-    "mongofb": "^1.0.1",
     "mongoose": "^6.6.5",
     "morgan": "~1.9.1"
   }

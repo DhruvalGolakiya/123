@@ -3,20 +3,20 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-
-mongoose.connect('mongodb+srv://Dhruval:DhruvalMDDK257@cluster0.eus4ytk.mongodb.net/test')
+mongoose.connect(
+  "mongodb+srv://Dhruval:DhruvalMDDK257@cluster0.eus4ytk.mongodb.net/test"
+);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
 db.once("open", function () {
   console.log("Connected successfully");
 });
 
-var fileRouter = require("./routes/files/file");
-var fileEditRouter = require("./routes/fileedit/file_edit");
-var databaseRouter = require("./routes/database/database_edit");
- 
+var signUpRouter = require("./routes/SignUp/sign_up");
+var logInRouter = require("./routes/LogIn/log_in");
+
 var app = express();
 
 // view engine setup
@@ -29,8 +29,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use('/file', fileEditRouter)
-app.use('/database', databaseRouter)
+app.use("/signup", signUpRouter);
+app.use("/login", logInRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
